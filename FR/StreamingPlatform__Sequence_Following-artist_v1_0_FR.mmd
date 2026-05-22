@@ -1,0 +1,25 @@
+sequenceDiagram
+    autonumber
+    actor EndUser
+    participant UI as StreamingPlatform (UI)
+    participant Artist
+    participant User
+
+    Note over UI: le formulaire web fournit l'id utilisateur et l'id artiste
+    EndUser->>UI: followArtist(user_id, artist_id)
+    activate UI
+    UI->>Artist: get(artist_id)
+    activate Artist
+    note left of Artist: retourne l'artiste s'il existe
+    Artist-->>UI: Artist
+    note left of UI: retournerait une erreur si l'artiste est introuvable
+    UI->>User: startFollowing(Artist)
+    User->>User: vérifie si déjà présent dans followed_artists
+    alt PAS ENCORE SUIVI
+        User->>User: ajoute dans followed_artists
+        User-->>UI: true
+        UI-->>EndUser: true (artiste désormais suivi)
+    else artiste déjà suivi
+        User-->>UI: false
+        UI-->>EndUser: false (déjà suivi)
+    end
