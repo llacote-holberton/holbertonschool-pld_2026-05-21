@@ -2,11 +2,12 @@
 
 This exercice was held during the afternoon of May 21th, 2026.
 The following students worked together to achieve the following deliverables:
-    * Erwan Barat
-    * Laurent Lacôte
-    * Yoaan Lages
-    * David Lengelle
-    * Kevin Rigal
+
+* Erwan Barat
+* Laurent Lacôte
+* Yoaan Lages
+* David Lengelle
+* Kevin Rigal
 
 Details of the exercises can be found on the intranet, with authenticated access required.
 
