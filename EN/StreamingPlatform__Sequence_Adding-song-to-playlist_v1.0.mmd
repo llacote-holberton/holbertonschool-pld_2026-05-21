@@ -1,0 +1,42 @@
+sequenceDiagram
+    autonumber
+    actor EndUser
+    participant UI as StreamingPlatform (UI)
+    participant User
+    participant Playlist
+
+    %% Phase 1: choosing one playlist to manage
+    EndUser->>UI: getUserPlaylistsNames(user_id)
+    activate UI
+    UI->>User: getPlaylists()
+    activate User
+    User-->>UI: registry of playlists's names
+    deactivate User
+    UI-->>EndUser: list_of_playlists_names
+    deactivate UI
+
+    EndUser->>UI: getUserPlaylistByName(owner, playlist_name)
+    activate UI
+    UI->>Playlist: getByOwnerAndName(owner, playlist_name)
+    activate Playlist
+    Playlist-->>UI: playlist if exist
+    deactivate Playlist
+
+    UI-->>EndUser: playlist
+    deactivate UI
+
+    %% Phase 2: Playlist is "in web session", user browses songs to add
+    EndUser->>UI: browseSongs()
+    activate UI
+    UI-->>EndUser: array of Song(s)
+    deactivate UI
+    %% Phase 3: Enduser clicks on the button associated with a single song
+    EndUser->>UI: addToPlaylist(song_id, playlist_id)
+    activate UI
+    UI->>Playlist: addSong(song_id)
+    activate Playlist
+    Note over Playlist: Adds if not already in
+    Playlist-->>UI: Success (Song added)
+    deactivate Playlist
+    UI-->>EndUser: Notification "Song added"
+    deactivate UI

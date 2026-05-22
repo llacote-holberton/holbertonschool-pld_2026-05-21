@@ -1,0 +1,23 @@
+sequenceDiagram
+    autonumber
+    actor EndUser
+    participant UI as StreamingPlatform
+    participant User
+    participant P as Playlist
+
+    EndUser->>UI: createPlaylist(user, name)
+    activate UI
+    UI->>UI: checks format is valid (avoid XSS)
+
+    alt VALID FORMAT
+        activate P
+        UI->>P: create(name, owner)
+        P-->>UI: playlist_id
+        UI->>P: get(playlist_id)
+        P-->>UI: playlist
+        deactivate P
+        UI-->>EndUser: playlist
+    else INVALID FORMAT
+        UI-->>EndUser: error message
+    end
+    deactivate UI
